@@ -5,8 +5,15 @@
  */
 package pack.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Timer;
 import pack.control.controllerToko;
 import pack.model.m_toko;
 
@@ -17,15 +24,22 @@ import pack.model.m_toko;
 public class home extends javax.swing.JFrame {
     
     controllerToko cToko;
-    List<m_toko>listdata = new ArrayList();
+    List<m_toko>listdata = new ArrayList<>();
+    String nol_jam="";
+    String nol_menit="";
+    String nol_detik="";
 
     /**
      * Creates new form home
      */
-    public home() {
+    public home() throws SQLException {
         initComponents();
-        cToko = new controllerToko  (this);
+        cToko = new controllerToko(this);
         cToko.isiTable();
+        setTanggal();
+        setJam();
+        String user = null;
+        txtAdmin.setText(user);
     }
 
     /**
@@ -40,16 +54,18 @@ public class home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        txtAdmin = new javax.swing.JLabel();
+        lblJam = new javax.swing.JLabel();
+        lbltanggal = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtHarga = new javax.swing.JTextField();
+        txtKode = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
@@ -84,11 +100,21 @@ public class home extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(20, 20, 70, 15);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(80, 10, 110, 40);
+        txtAdmin.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        txtAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        txtAdmin.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.add(txtAdmin);
+        txtAdmin.setBounds(80, 10, 110, 40);
+
+        lblJam.setBackground(new java.awt.Color(255, 255, 255));
+        lblJam.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel1.add(lblJam);
+        lblJam.setBounds(610, 40, 120, 30);
+
+        lbltanggal.setBackground(new java.awt.Color(255, 255, 255));
+        lbltanggal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel1.add(lbltanggal);
+        lbltanggal.setBounds(630, 10, 100, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 740, 80);
@@ -120,12 +146,12 @@ public class home extends javax.swing.JFrame {
         jLabel9.setText("Jenis Packaging");
         jPanel2.add(jLabel9);
         jLabel9.setBounds(10, 130, 110, 30);
-        jPanel2.add(jTextField2);
-        jTextField2.setBounds(170, 170, 390, 30);
-        jPanel2.add(jTextField3);
-        jTextField3.setBounds(170, 10, 390, 30);
-        jPanel2.add(jTextField4);
-        jTextField4.setBounds(170, 50, 390, 30);
+        jPanel2.add(txtHarga);
+        txtHarga.setBounds(170, 170, 390, 30);
+        jPanel2.add(txtKode);
+        txtKode.setBounds(170, 10, 390, 30);
+        jPanel2.add(txtNama);
+        txtNama.setBounds(170, 50, 390, 30);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox2);
@@ -294,7 +320,11 @@ public class home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new home().setVisible(true);
+                try {
+                    new home().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -309,7 +339,6 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -322,15 +351,68 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JButton keluar;
+    private javax.swing.JLabel lblJam;
+    private javax.swing.JLabel lbltanggal;
     private javax.swing.JButton simpan;
+    private javax.swing.JLabel txtAdmin;
+    private javax.swing.JTextField txtHarga;
+    private javax.swing.JTextField txtKode;
+    private javax.swing.JTextField txtNama;
     private javax.swing.JButton ubah;
     // End of variables declaration//GEN-END:variables
 
     public Object getTxtKode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return txtKode;//To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object getTxtNama() {
+        return txtNama;//To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object getTxtHarga() {
+        return txtHarga; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object getCbKategori() {
+        return jComboBox3;//To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object getCbJenis() {
+        return jComboBox2; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void setTanggal(){
+        java.util.Date skrg = new java.util.Date();
+        java.text.SimpleDateFormat kal = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        lbltanggal.setText(kal.format(skrg));
+    }
+    
+    public void setJam(){
+        ActionListener taskPerformer = new ActionListener() {
+            
+            public void actionPerformed(ActionEvent evt) {
+                Date dt = new Date();
+                int nilai_jam = dt.getHours();
+                int nilai_menit = dt.getMinutes();
+                int nilai_detik = dt.getSeconds();
+                
+                if(nilai_jam<= 9){
+                    nol_jam = "0";
+                }
+                if(nilai_menit <= 9){
+                    nol_menit = "0";
+                }
+                if(nilai_detik <= 9){
+                    nol_detik = "0";
+                }
+                
+                String jam = nol_jam + Integer.toString(nilai_jam);
+                String menit = nol_menit + Integer.toString(nilai_menit);
+                String detik = nol_detik + Integer.toString(nilai_detik);
+                lblJam.setText("Jam : "+ jam + ":" + menit + ":" + detik);
+            }
+        };
+        new Timer(100, taskPerformer).start();
     }
 }

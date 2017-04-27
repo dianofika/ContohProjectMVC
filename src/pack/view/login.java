@@ -10,13 +10,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import pack.control.login_koneksi;
 
 /**
  *
  * @author DIAN NOFIKA P A
  */
 public class login extends javax.swing.JFrame {
+    
+    static String useraktif;
+
+    String user;
 
     /**
      * Creates new form login
@@ -83,6 +89,11 @@ public class login extends javax.swing.JFrame {
         jPanel2.setLayout(null);
 
         jButton1.setText("EXIT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton1);
         jButton1.setBounds(30, 50, 270, 30);
 
@@ -96,6 +107,11 @@ public class login extends javax.swing.JFrame {
         SignIn.setBounds(30, 10, 130, 30);
 
         jButton3.setText("SignUp");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton3);
         jButton3.setBounds(170, 10, 130, 30);
 
@@ -114,29 +130,50 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnamaActionPerformed
 
     private void SignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInActionPerformed
-        Connection connection;
-        PreparedStatement ps;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/toko?zeroDateTimeBehavior=convertToNull", "root", "");
-            ps = connection.prepareStatement("SELECT * FROM `tb_akun` WHERE `username` = ? AND `password` = ?");
-            ps.setString(1, txtnama.getText());
-            ps.setString(2, txtpass.getText());
-            ResultSet result =ps.executeQuery();
-            if(result.next()){
-                new home().show();
-                user = txtnama.getText();//perlu deklarasi user diclass utama.
-                this.dispose();
-            }
-            else{
+
+        Connection connection;   
+        PreparedStatement ps;      
+        try {       
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/toko?zeroDate TimeBehavior=convertToNull", "root", "");
+            ps = connection.prepareStatement("SELECT * FROM `tb_akun` WHERE `username` = ? AND `password` = ?");  
+            ps.setString(1, txtnama.getText());       
+            ps.setString(2, txtpass.getText());       
+            ResultSet result =ps.executeQuery();    
+            if(result.next()){               
+                new home().show();              
+                useraktif = txtnama.getText(); //perlu deklarasi user diclass utama. 
+                this.dispose();        
+            }           
+            else{       
                 JOptionPane.showMessageDialog(rootPane, "Salah!");
-                txtpass.setText("");
-                txtnama.requestFocus();
+                txtpass.setText(""); 
+                txtnama.requestFocus();       
             }
-        }catch (SQLException ex){
-            JOptionPane.showMessageDialog(rootPane,"Gagal!");
-        // TODO add your handling code here:
+        }catch (SQLException ex){  
+            JOptionPane.showMessageDialog(rootPane,"Gagal!");  
+        }
     }//GEN-LAST:event_SignInActionPerformed
-    }
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String username = txtnama.getText();
+        String password = txtpass.getText();
+        
+        try {
+            try (Statement statement = (Statement) login_koneksi.GetConnection().createStatement()){
+                statement.executeUpdate("INSERT INTO tb_akun(username,password) VALUES ('"+username+"','"+password+"');");
+            }
+            JOptionPane.showMessageDialog(null, "Selamat! anda berhasil Sign Up");
+        }catch(Exception t){
+            JOptionPane.showMessageDialog(null,"Mohon maaf, ulangi lagi prosedur");
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */

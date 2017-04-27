@@ -5,6 +5,7 @@
  */
 package pack.model;
 
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**

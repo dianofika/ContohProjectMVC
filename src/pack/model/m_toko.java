@@ -10,39 +10,47 @@ package pack.model;
  * @author DIAN NOFIKA P A
  */
 public class m_toko {
-    public String Nama_Barang, Jenis, Harga, Kategori;
-    public String Kode_Barang;
+    public String Nama_Barang, Jenis, Harga, Kategori; 
+    public String Kode_Barang; 
     
-    public String getkode(){
-        return Kode_Barang;
+    public String getkode() {
+        return Kode_Barang; 
     }
-    public String getnama(){
-        return Nama_Barang;
+    
+    public String getnama() {   
+        return Nama_Barang; 
     }
-    public String getkategori() {
+    
+    public String getkategori() { 
         return Kategori;
     }
-    public String getjenis(){
+    
+    public String getjenis() {   
         return Jenis;
     }
-    public String getharga(){
-        return Harga;
+    
+    public String getharga() {  
+        return Harga; 
     }
     
     //method set 
-    public void setkode(String kode){
+    public void setkode(String kode) { 
         this.Kode_Barang= kode;
-    }
-    public void setnama(String nama){
+    } 
+    
+    public void setnama(String nama) { 
         this.Nama_Barang= nama;
-    }
-    public void setkategori(String kategori) {
+    } 
+    
+    public void setkategori(String kategori){ 
         this.Kategori=kategori;
+    } 
+    
+    public void setjenis(String jenis) { 
+        this.Jenis= jenis; 
     }
-    public void setjenis(String jenis){
-        this.Jenis= jenis;
-    }
-    public void setharga(String harga){
+    
+    public void setharga(String harga) {  
         this.Harga= harga;
     }
 }

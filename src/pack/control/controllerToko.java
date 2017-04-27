@@ -22,7 +22,7 @@ import pack.model.tableModelToko;
  * @author DIAN NOFIKA P A
  */
 public class controllerToko {
-  home hm;
+    home hm;
     implementToko impToko;
     List<m_toko> lt;
 
@@ -97,5 +97,5 @@ public class controllerToko {
         lt = impToko.getCariKategori(item);
         tableModelToko tmt = new tableModelToko(lt);
         hm.getTableData().setModel(tmt);
-    }
+    }     
 }

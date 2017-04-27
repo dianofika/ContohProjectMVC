@@ -5,6 +5,7 @@
  */
 package pack.view;
 
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -13,6 +14,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import pack.control.controllerToko;
 import pack.model.m_toko;
@@ -77,9 +81,9 @@ public class home extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbData = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbCari = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -220,7 +224,7 @@ public class home extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(204, 0, 204));
         jPanel4.setLayout(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -231,7 +235,7 @@ public class home extends javax.swing.JFrame {
                 "Kode Barang", "Nama Barang", "Kategori", "Packaging", "Harga"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbData);
 
         jPanel4.add(jScrollPane1);
         jScrollPane1.setBounds(0, 20, 580, 130);
@@ -244,9 +248,9 @@ public class home extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(70, 280, 200, 40);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(280, 290, 140, 20);
+        cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cbCari);
+        cbCari.setBounds(280, 290, 140, 20);
 
         jButton1.setText("Cari");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -331,9 +335,9 @@ public class home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bersihkan;
+    private javax.swing.JComboBox<String> cbCari;
     private javax.swing.JButton hapus;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
@@ -350,11 +354,11 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton keluar;
     private javax.swing.JLabel lblJam;
     private javax.swing.JLabel lbltanggal;
     private javax.swing.JButton simpan;
+    private javax.swing.JTable tbData;
     private javax.swing.JLabel txtAdmin;
     private javax.swing.JTextField txtHarga;
     private javax.swing.JTextField txtKode;
@@ -362,23 +366,24 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton ubah;
     // End of variables declaration//GEN-END:variables
 
-    public Object getTxtKode() {
-        return txtKode;//To change body of generated methods, choose Tools | Templates.
+    public JTextField getTxtKode() {
+        return txtKode;
+//To change body of generated methods, choose Tools | Templates.
     }
 
-    public Object getTxtNama() {
+    public JTextField getTxtNama() {
         return txtNama;//To change body of generated methods, choose Tools | Templates.
     }
 
-    public Object getTxtHarga() {
+    public JTextField getTxtHarga() {
         return txtHarga; //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Object getCbKategori() {
+    public JComboBox getCbKategori() {
         return jComboBox3;//To change body of generated methods, choose Tools | Templates.
     }
 
-    public Object getCbJenis() {
+    public JComboBox getCbJenis() {
         return jComboBox2; //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -414,5 +419,13 @@ public class home extends javax.swing.JFrame {
             }
         };
         new Timer(100, taskPerformer).start();
+    }
+
+    public JComboBox getCbCariKategori() {
+        return cbCari; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public JTable getTableData() {
+        return tbData; //To change body of generated methods, choose Tools | Templates.
     }
 }
